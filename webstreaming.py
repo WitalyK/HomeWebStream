@@ -3,8 +3,10 @@ from imutils.video import VideoStream
 from flask import Response
 from flask import Flask
 from flask import render_template
+from multiprocessing import Process
+from ui_mainform import Ui_WebStream
+from PyQt5 import QtWidgets
 import threading
-import argparse
 import datetime
 import imutils
 import time
@@ -22,6 +24,10 @@ app = Flask(__name__)
 # vs = VideoStream(usePiCamera=1).start()
 vs = VideoStream(src=0).start()
 time.sleep(2.0)
+
+keywords = {'host': "0.0.0.0", 'port': 8765, 'debug': True,
+            'threaded': True, 'use_reloader': False}
+server = Process(target=app.run, kwargs=keywords)
 
 
 @app.route("/")
@@ -104,24 +110,42 @@ def video_feed():
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 
 
-# check to see if this is the main thread of execution
-if __name__ == '__main__':
-    # construct the argument parser and parse command line arguments
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--ip", type=str, required=True,
-                    help="ip address of the device")
-    ap.add_argument("-o", "--port", type=int, required=True,
-                    help="ephemeral port number of the server (1024 to 65535)")
-    ap.add_argument("-f", "--frame-count", type=int, default=32,
-                    help="# of frames used to construct the background model")
-    args = vars(ap.parse_args())
+
+
+class MyWindow(QtWidgets.QWidget, Ui_WebStream):
+    def __init__(self, parent=None):
+        QtWidgets.QWidget.__init__(self, parent)
+        self.setupUi(self)
+        self.btnQuit.clicked.connect(QtWidgets.qApp.quit)
+        self.startwebserverbutton.clicked.connect(self.on_start())
+        self.stopwebserverbutton.setDisabled(True)
+        self.stopwebserverbutton.clicked.connect(self.on_stop())
+
+    def on_start(self):
+        if not server.is_alive():
+            self.startwebserverbutton.setDisabled(True)
+            self.stopwebserverbutton.setDisabled(False)
+            server.start()
+
+    def on_stop(self):
+        if server.is_alive():
+            self.startwebserverbutton.setDisabled(False)
+            self.stopwebserverbutton.setDisabled(True)
+            server.terminate()
+            server.join()
+
+
+if __name__ == "__main__":
+    import sys
     # start a thread that will perform motion detection
-    t = threading.Thread(target=detect_motion, args=(
-        args["frame_count"],))
+    t = threading.Thread(target=detect_motion, args=(32,))
     t.daemon = True
     t.start()
-    # start the flask app
-    app.run(host=args["ip"], port=args["port"], debug=True,
-            threaded=True, use_reloader=False)
+
+    app = QtWidgets.QApplication(sys.argv)
+    window = MyWindow()
+    window.show()
+    sys.exit(app.exec_())
+
 # release the video stream pointer
 vs.stop()
