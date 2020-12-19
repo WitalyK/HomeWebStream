@@ -40,16 +40,16 @@ class Ui_WebStream(object):
 "border-radius: 10px;\n"
 "color: rgb(87, 0, 0);")
         self.stopwebserverbutton.setObjectName("stopwebserverbutton")
-        self.textEdit = QtWidgets.QTextEdit(WebStream)
-        self.textEdit.setGeometry(QtCore.QRect(110, 10, 104, 31))
+        self.lineEdit = QtWidgets.QLineEdit(WebStream)
+        self.lineEdit.setGeometry(QtCore.QRect(110, 10, 104, 31))
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(14)
-        self.textEdit.setFont(font)
-        self.textEdit.setStyleSheet("background-color: rgb(255, 130, 5);\n"
+        self.lineEdit.setFont(font)
+        self.lineEdit.setStyleSheet("background-color: rgb(255, 130, 5);\n"
 "border-radius: 8px;\n"
 "color: rgb(87, 0, 0);")
-        self.textEdit.setObjectName("textEdit")
+        self.lineEdit.setObjectName("lineEdit")
         self.label = QtWidgets.QLabel(WebStream)
         self.label.setGeometry(QtCore.QRect(50, 20, 51, 21))
         font = QtGui.QFont()
@@ -67,5 +67,5 @@ class Ui_WebStream(object):
         WebStream.setWindowTitle(_translate("WebStream", "WebStream"))
         self.startwebserverbutton.setText(_translate("WebStream", "Запустить стрим"))
         self.stopwebserverbutton.setText(_translate("WebStream", "Остановить стрим"))
-        self.textEdit.setPlaceholderText(_translate("WebStream", "8765"))
+        self.lineEdit.setPlaceholderText(_translate("WebStream", "8765"))
         self.label.setText(_translate("WebStream", "Port:"))

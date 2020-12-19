@@ -110,21 +110,22 @@ def video_feed():
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 
 
-
-
 class MyWindow(QtWidgets.QWidget, Ui_WebStream):
+
     def __init__(self, parent=None):
         QtWidgets.QWidget.__init__(self, parent)
         self.setupUi(self)
-        self.btnQuit.clicked.connect(QtWidgets.qApp.quit)
         self.startwebserverbutton.clicked.connect(self.on_start())
         self.stopwebserverbutton.setDisabled(True)
         self.stopwebserverbutton.clicked.connect(self.on_stop())
 
     def on_start(self):
+        global keywords
         if not server.is_alive():
             self.startwebserverbutton.setDisabled(True)
             self.stopwebserverbutton.setDisabled(False)
+            if port := int(self.lineEdit.text()):
+                keywords['port'] = port
             server.start()
 
     def on_stop(self):
@@ -137,15 +138,16 @@ class MyWindow(QtWidgets.QWidget, Ui_WebStream):
 
 if __name__ == "__main__":
     import sys
+
     # start a thread that will perform motion detection
     t = threading.Thread(target=detect_motion, args=(32,))
     t.daemon = True
     t.start()
 
-    app = QtWidgets.QApplication(sys.argv)
+    app_qt = QtWidgets.QApplication(sys.argv)
     window = MyWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app_qt.exec_())
 
 # release the video stream pointer
 vs.stop()
