@@ -11,37 +11,41 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_WebStream(object):
-    def setupUi(self, WebStream):
-        WebStream.setObjectName("WebStream")
-        WebStream.setEnabled(True)
-        WebStream.resize(230, 171)
-        WebStream.setWindowOpacity(0.0)
-        WebStream.setStyleSheet("background-color: rgb(176, 96, 255);")
-        self.startwebserverbutton = QtWidgets.QPushButton(WebStream)
-        self.startwebserverbutton.setGeometry(QtCore.QRect(10, 50, 211, 51))
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(251, 160)
+        Dialog.setStyleSheet("background-color: rgb(176, 96, 255);")
+        self.startwebserverbutton = QtWidgets.QPushButton(Dialog)
+        self.startwebserverbutton.setGeometry(QtCore.QRect(10, 40, 231, 51))
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(14)
         self.startwebserverbutton.setFont(font)
         self.startwebserverbutton.setStyleSheet("background-color: rgb(255, 130, 5);\n"
-"selection-background-color: rgb(255, 74, 38);\n"
 "border-radius: 10px;\n"
 "color: rgb(87, 0, 0);")
         self.startwebserverbutton.setObjectName("startwebserverbutton")
-        self.stopwebserverbutton = QtWidgets.QPushButton(WebStream)
-        self.stopwebserverbutton.setGeometry(QtCore.QRect(10, 110, 211, 51))
+        self.stopwebserverbutton = QtWidgets.QPushButton(Dialog)
+        self.stopwebserverbutton.setGeometry(QtCore.QRect(10, 100, 231, 51))
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(14)
         self.stopwebserverbutton.setFont(font)
         self.stopwebserverbutton.setStyleSheet("background-color: rgb(255, 130, 5);\n"
-"selection-background-color: rgb(255, 74, 38);\n"
 "border-radius: 10px;\n"
 "color: rgb(87, 0, 0);")
         self.stopwebserverbutton.setObjectName("stopwebserverbutton")
-        self.lineEdit = QtWidgets.QLineEdit(WebStream)
-        self.lineEdit.setGeometry(QtCore.QRect(110, 10, 104, 31))
+        self.label = QtWidgets.QLabel(Dialog)
+        self.label.setGeometry(QtCore.QRect(40, 10, 61, 21))
+        font = QtGui.QFont()
+        font.setFamily("Verdana")
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setStyleSheet("color: rgb(87, 0, 0);")
+        self.label.setObjectName("label")
+        self.lineEdit = QtWidgets.QLineEdit(Dialog)
+        self.lineEdit.setGeometry(QtCore.QRect(110, 10, 113, 20))
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(14)
@@ -50,22 +54,14 @@ class Ui_WebStream(object):
 "border-radius: 8px;\n"
 "color: rgb(87, 0, 0);")
         self.lineEdit.setObjectName("lineEdit")
-        self.label = QtWidgets.QLabel(WebStream)
-        self.label.setGeometry(QtCore.QRect(50, 20, 51, 21))
-        font = QtGui.QFont()
-        font.setFamily("Verdana")
-        font.setPointSize(14)
-        self.label.setFont(font)
-        self.label.setStyleSheet("color: rgb(87, 0, 0);")
-        self.label.setObjectName("label")
 
-        self.retranslateUi(WebStream)
-        QtCore.QMetaObject.connectSlotsByName(WebStream)
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, WebStream):
+    def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        WebStream.setWindowTitle(_translate("WebStream", "WebStream"))
-        self.startwebserverbutton.setText(_translate("WebStream", "Запустить стрим"))
-        self.stopwebserverbutton.setText(_translate("WebStream", "Остановить стрим"))
-        self.lineEdit.setPlaceholderText(_translate("WebStream", "8765"))
-        self.label.setText(_translate("WebStream", "Port:"))
+        Dialog.setWindowTitle(_translate("Dialog", "WebStream"))
+        self.startwebserverbutton.setText(_translate("Dialog", "Запустить стрим"))
+        self.stopwebserverbutton.setText(_translate("Dialog", "Остановить и выйти"))
+        self.label.setText(_translate("Dialog", "Порт:"))
+        self.lineEdit.setPlaceholderText(_translate("Dialog", "8765"))
