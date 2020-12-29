@@ -76,7 +76,11 @@ def detect_motion(frameCount):
 
 def generate():
     # grab global references to the output frame and lock variables
-    global outputFrame, lock, writer, onrecord_
+    global outputFrame, lock, writer
+    if writer is None:
+        h,w = outputFrame.shape[:2]
+        timestamp = datetime.now()
+        writer = cv2.VideoWriter("test_" + timestamp.strftime("%d_%m_%Y_%H%M") + ".avi", cv2.VideoWriter_fourcc(*"XVID"),5,(w,h), True) # MJPG XVID , 15
     # loop over frames from the output stream
     while True:
         # wait until the lock is acquired
@@ -90,8 +94,7 @@ def generate():
             # ensure the frame was successfully encoded
             if not flag:
                 continue
-        if onrecord_:
-            writer.write(outputFrame)  # outputFrame
+        writer.write(outputFrame)  # outputFrame
         # yield the output frame in the byte format
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
                bytearray(encodedImage) + b'\r\n')
@@ -113,10 +116,6 @@ class MyWindow(QtWidgets.QWidget, Ui_Dialog):  # Ui_WebStream
         self.startwebserverbutton.clicked.connect(lambda: self.on_start())
         self.stopwebserverbutton.setDisabled(True)
         self.stopwebserverbutton.clicked.connect(lambda: self.on_stop())
-        self.startrecordbutton.clicked.connect(lambda: self.on_startrecord())
-        self.startrecordbutton.setDisabled(True)
-        self.stoprecordbutton.clicked.connect(lambda: self.on_stoprecord())
-        self.stoprecordbutton.setDisabled(True)
         self.enablebuttoncolor = '''background-color: rgb(255, 130, 5);\n
                                                 border-radius: 10px;\n
                                                 color: rgb(87, 0, 0);'''
@@ -129,8 +128,6 @@ class MyWindow(QtWidgets.QWidget, Ui_Dialog):  # Ui_WebStream
         self.startwebserverbutton.setStyleSheet(self.disablebuttoncolor)
         self.stopwebserverbutton.setDisabled(False)
         self.stopwebserverbutton.setStyleSheet(self.enablebuttoncolor)
-        self.startrecordbutton.setDisabled(False)
-        self.startrecordbutton.setStyleSheet(self.enablebuttoncolor)
         if self.lineEdit.text():
             try:
                 port = int(self.lineEdit.text())
@@ -139,28 +136,7 @@ class MyWindow(QtWidgets.QWidget, Ui_Dialog):  # Ui_WebStream
                 pass
         if not t1.is_alive(): t1.start()
         # app.run(host="0.0.0.0", port=port, debug=True, threaded=True, use_reloader=False)
-    
-    def on_startrecord(self):
-        global writer, onrecord_
-        self.startrecordbutton.setDisabled(True)
-        self.startrecordbutton.setStyleSheet(self.disablebuttoncolor)
-        self.stoprecordbutton.setDisabled(False)
-        self.stoprecordbutton.setStyleSheet(self.enablebuttoncolor)
-        if writer is None:
-            h,w = outputFrame.shape[:2]
-            timestamp = datetime.now()
-            writer = cv2.VideoWriter("test_" + timestamp.strftime("%d_%m_%Y_%H%M") + ".avi", cv2.VideoWriter_fourcc(*"XVID"),5,(w,h), True) # XVID , 15
-        onrecord_ = True
-        
-        
-    def on_stoprecord(self):
-        global onrecord_
-        self.startrecordbutton.setDisabled(False)
-        self.startrecordbutton.setStyleSheet(self.enablebuttoncolor)
-        self.stoprecordbutton.setDisabled(True)
-        self.stoprecordbutton.setStyleSheet(self.disablebuttoncolor)
-        onrecord_ = False
-    
+
     def on_stop(self):
         self.startwebserverbutton.setDisabled(False)
         self.startwebserverbutton.setStyleSheet(self.enablebuttoncolor)
@@ -172,7 +148,6 @@ class MyWindow(QtWidgets.QWidget, Ui_Dialog):  # Ui_WebStream
 if __name__ == "__main__":
     import sys
     writer = None
-    onrecord_ = False
     # start a thread that will perform motion detection
     t = Thread(target=detect_motion, args=(32,))
     t.daemon = True

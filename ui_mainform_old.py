@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(250, 280)
+        Dialog.resize(251, 160)
         Dialog.setStyleSheet("background-color: rgb(176, 96, 255);")
         self.startwebserverbutton = QtWidgets.QPushButton(Dialog)
         self.startwebserverbutton.setGeometry(QtCore.QRect(10, 40, 231, 51))
@@ -27,7 +27,7 @@ class Ui_Dialog(object):
 "color: rgb(87, 0, 0);")
         self.startwebserverbutton.setObjectName("startwebserverbutton")
         self.stopwebserverbutton = QtWidgets.QPushButton(Dialog)
-        self.stopwebserverbutton.setGeometry(QtCore.QRect(10, 220, 231, 51))
+        self.stopwebserverbutton.setGeometry(QtCore.QRect(10, 100, 231, 51))
         font = QtGui.QFont()
         font.setFamily("Verdana")
         font.setPointSize(14)
@@ -54,26 +54,6 @@ class Ui_Dialog(object):
 "border-radius: 8px;\n"
 "color: rgb(87, 0, 0);")
         self.lineEdit.setObjectName("lineEdit")
-        self.startrecordbutton = QtWidgets.QPushButton(Dialog)
-        self.startrecordbutton.setGeometry(QtCore.QRect(10, 100, 231, 51))
-        font = QtGui.QFont()
-        font.setFamily("Verdana")
-        font.setPointSize(14)
-        self.startrecordbutton.setFont(font)
-        self.startrecordbutton.setStyleSheet("background-color: rgb(255, 130, 5);\n"
-"border-radius: 10px;\n"
-"color: rgb(87, 0, 0);")
-        self.startrecordbutton.setObjectName("startrecordbutton")
-        self.stoprecordbutton = QtWidgets.QPushButton(Dialog)
-        self.stoprecordbutton.setGeometry(QtCore.QRect(10, 160, 231, 51))
-        font = QtGui.QFont()
-        font.setFamily("Verdana")
-        font.setPointSize(14)
-        self.stoprecordbutton.setFont(font)
-        self.stoprecordbutton.setStyleSheet("background-color: rgb(255, 130, 5);\n"
-"border-radius: 10px;\n"
-"color: rgb(87, 0, 0);")
-        self.stoprecordbutton.setObjectName("stoprecordbutton")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -82,8 +62,6 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "WebStream"))
         self.startwebserverbutton.setText(_translate("Dialog", "Запустить стрим"))
-        self.stopwebserverbutton.setText(_translate("Dialog", "Остановить стрим"))
+        self.stopwebserverbutton.setText(_translate("Dialog", "Остановить и выйти"))
         self.label.setText(_translate("Dialog", "Порт:"))
         self.lineEdit.setPlaceholderText(_translate("Dialog", "8765"))
-        self.startrecordbutton.setText(_translate("Dialog", "Начать запись"))
-        self.stoprecordbutton.setText(_translate("Dialog", "Остановить запись"))

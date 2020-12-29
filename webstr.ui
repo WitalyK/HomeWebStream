@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>251</width>
-    <height>160</height>
+    <width>250</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,7 +44,7 @@ color: rgb(87, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>100</y>
+     <y>220</y>
      <width>231</width>
      <height>51</height>
     </rect>
@@ -108,6 +108,54 @@ color: rgb(87, 0, 0);</string>
    </property>
    <property name="placeholderText">
     <string>8765</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startrecordbutton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>231</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 130, 5);
+border-radius: 10px;
+color: rgb(87, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>Начать запись</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="stoprecordbutton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>160</y>
+     <width>231</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 130, 5);
+border-radius: 10px;
+color: rgb(87, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>Остановить запись</string>
    </property>
   </widget>
  </widget>
